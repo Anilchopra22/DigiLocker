@@ -13,4 +13,8 @@
     <string name="title_activity_howto">HowtoActivity</string>
     <string name="title_activity_apply">ApplyActivity</string>
     <string name="title_activity_doc_requirement">DocRequirementActivity</string>
+
+    <string name="title_activity_camera">CameraActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

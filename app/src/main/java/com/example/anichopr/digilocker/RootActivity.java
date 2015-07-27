@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Camera;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -208,11 +209,11 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
 
                     if (digidocs[position].documentURL == null ||
                             digidocs[position].documentURL.isEmpty()) {
-                        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                        startActivityForResult(intent, CAMERA_REQUEST);
+//                        Intent intent = new Intent(mContext, CameraActivity.class);
+//                        startActivity(intent);
                     } else {
                         Intent browserIntent = new Intent("android.intent.action.VIEW",
-                                Uri.parse("https://digilocker.gov.in/CandidateLocker/" + digidocs[position].documentURL));
+                                Uri.parse("http://docs.google.com/gview?embedded=true&url=" + "https://digilocker.gov.in/CandidateLocker/" + digidocs[position].documentURL));
                         startActivity(browserIntent);
                     }
                 }
@@ -221,8 +222,8 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                    startActivityForResult(intent, CAMERA_REQUEST);
+//                    Intent intent = new Intent(mContext, CameraActivity.class);
+//                    startActivity(intent);
                 }
             });
             return relativeLayout;
@@ -275,7 +276,7 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
                         startActivityForResult(intent, CAMERA_REQUEST);
                     } else {
                         Intent browserIntent = new Intent("android.intent.action.VIEW",
-                                Uri.parse("https://digilocker.gov.in/CandidateLocker/" + digidocs[position].documentURL));
+                                Uri.parse("http://docs.google.com/gview?embedded=true&url=" + "https://digilocker.gov.in/CandidateLocker/" + digidocs[position].documentURL));
                         startActivity(browserIntent);
                     }
                 }
