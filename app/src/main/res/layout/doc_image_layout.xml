@@ -10,15 +10,18 @@
 
     <ImageView
         android:id="@+id/img2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center"
         android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/doc_xx" />
 
     <TextView
         android:id="@+id/txt2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_below="@+id/img2"
         android:text="TextView"
-        android:textColor="#FFFFFF" />
+        android:background="@color/blue"
+        android:textColor="@android:color/white" />
 </RelativeLayout>

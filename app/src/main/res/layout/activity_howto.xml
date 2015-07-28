@@ -9,6 +9,7 @@
     <TextView
         android:id="@+id/how_to_title"
         android:text="PICK A DOCUMENT"
+        android:textColor="@color/black_overlay"
         android:layout_margin="4dp"
         android:paddingLeft="4dp"
         android:paddingBottom="4dp"

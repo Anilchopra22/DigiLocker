@@ -1,5 +1,7 @@
 package com.example.anichopr.digilocker;
 
+import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.StrictMode;
 
 import org.jsoup.Connection;
@@ -31,7 +33,17 @@ public class DocLibrary {
             "pan"
     };
 
-    public static void refreshEssentialAndOthersDigiDocs() {
+    public static int getImagefromName(String name) {
+        if (name.contains("")) {
+
+        } else {
+
+        }
+
+        return R.mipmap.alert;
+     }
+
+    public static void refreshEssentialAndOthersDigiDocs(Context context) {
         ArrayList<DigiDoc> otherDocList = new ArrayList<DigiDoc>();
         ArrayList<DigiDoc> essentialDocList = new ArrayList<DigiDoc>();
 
@@ -44,6 +56,9 @@ public class DocLibrary {
             boolean fEssentialDoc = false;
             for (int j=0; j<importantDocNames.length;j++) {
                 if (allDocs[i].documentName.equals(importantDocNames[j])) {
+                    int id = getImagefromName(allDocs[i].documentName);
+                    allDocs[i].bitmap = BitmapFactory.decodeResource(context.getResources(), id);
+
                     essentialDocList.add(allDocs[i]);
                     fEssentialDoc = true;
                     break;
@@ -64,6 +79,7 @@ public class DocLibrary {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Connection.Response res = Jsoup.connect("https://digilocker.gov.in/Signin.aspx")
+                    .timeout(100000)
                     .execute();
             Map<String, String> cookie_map = res.cookies();
 
@@ -75,7 +91,7 @@ public class DocLibrary {
             Element viewstateencryptedValue = doc.getElementById("__VIEWSTATEENCRYPTED");
             String seed = doc.getElementById("SitePH_btnLogin").attr("onClick").split("'")[1];
             String ss = viewstateencryptedValue.attr("value");
-            System.out.println(seed);
+
 
 
             Connection.Response signin = Jsoup.connect("https://digilocker.gov.in/Signin.aspx").
@@ -102,6 +118,7 @@ public class DocLibrary {
                     data("ctl00$SitePH$txt_UID", "Aadhaar Number").
                     cookies(cookie_map).
                     method(Connection.Method.POST).
+                    timeout(10000).
                     execute();
 
             //	File input = new File("C:\\Users\\israut\\Desktop\\DigiLocker.htm");

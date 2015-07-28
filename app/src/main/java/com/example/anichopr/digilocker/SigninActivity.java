@@ -20,7 +20,7 @@ public class SigninActivity extends Activity {
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DocLibrary.refreshEssentialAndOthersDigiDocs();
+                DocLibrary.refreshEssentialAndOthersDigiDocs(getApplicationContext());
                 Intent intent = new Intent(SigninActivity.this, RootActivity.class);
                 startActivity(intent);
             }

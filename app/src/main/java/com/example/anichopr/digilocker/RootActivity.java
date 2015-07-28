@@ -43,11 +43,16 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
     ViewPager mViewPager;
     private String[] tabs = { "Essentials", "Others"};
 
+    private  void  initActionBarStyle(){
+        getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.blue));
+        getSupportActionBar().setTitle("Documents");
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_root);
-
+        initActionBarStyle();
         // Initilization
         mViewPager = (ViewPager) findViewById(R.id.pager);
         ActionBar actionBar = getSupportActionBar();
@@ -62,7 +67,7 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
             actionBar.addTab(actionBar.newTab().setText(tab_name)
                     .setTabListener(this));
         }
-
+        
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
