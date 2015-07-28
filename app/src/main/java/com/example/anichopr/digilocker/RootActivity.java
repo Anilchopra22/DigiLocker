@@ -4,7 +4,6 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Camera;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -104,6 +103,8 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.notify) {
+            Intent notificationIntent = new Intent(RootActivity.this, NotificationActivity.class);
+            startActivity(notificationIntent);
             return true;
         } else if (id == R.id.apply) {
             Intent searchIntent = new Intent(RootActivity.this, HowtoActivity.class);
@@ -214,8 +215,8 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
 
                     if (digidocs[position].documentURL == null ||
                             digidocs[position].documentURL.isEmpty()) {
-//                        Intent intent = new Intent(mContext, CameraActivity.class);
-//                        startActivity(intent);
+                        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                        startActivityForResult(intent, CAMERA_REQUEST);
                     } else {
                         Intent browserIntent = new Intent("android.intent.action.VIEW",
                                 Uri.parse("http://docs.google.com/gview?embedded=true&url=" + "https://digilocker.gov.in/CandidateLocker/" + digidocs[position].documentURL));
@@ -227,8 +228,8 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Intent intent = new Intent(mContext, CameraActivity.class);
-//                    startActivity(intent);
+                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                    startActivityForResult(intent, CAMERA_REQUEST);
                 }
             });
             return relativeLayout;
@@ -267,6 +268,7 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
             RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.other_doc_layout, container, false);
             GridView gridview = (GridView) relativeLayout.findViewById(R.id.self_uploaded_doc_gridview);
             DigiDoc[] digidocs = DocLibrary.otherDocs;
+            ImageView imageView = (ImageView) relativeLayout.findViewById(R.id.add_document_btn);
 
             gridview.setAdapter(new DocImageAdapter(mContext, digidocs));
 
@@ -284,6 +286,14 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
                                 Uri.parse("http://docs.google.com/gview?embedded=true&url=" + "https://digilocker.gov.in/CandidateLocker/" + digidocs[position].documentURL));
                         startActivity(browserIntent);
                     }
+                }
+            });
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                    startActivityForResult(intent, CAMERA_REQUEST);
                 }
             });
 

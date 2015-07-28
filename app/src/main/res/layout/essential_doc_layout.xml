@@ -29,7 +29,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="1dp"
-        android:background="@mipmap/add_document"
+        android:background="@mipmap/moredocs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 </RelativeLayout>

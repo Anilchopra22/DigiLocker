@@ -44,12 +44,12 @@ public class DocLibrary {
             return R.mipmap.aadhaar;
         }
         else return R.mipmap.doc;
-
      }
 
     public static void refreshEssentialAndOthersDigiDocs(Context context) {
         ArrayList<DigiDoc> otherDocList = new ArrayList<DigiDoc>();
         ArrayList<DigiDoc> essentialDocList = new ArrayList<DigiDoc>();
+        boolean[] essentialDocAvailableList = new boolean[importantDocNames.length];
 
         // refresh all documents
         refreshDigiDocsFromDocument();
@@ -62,6 +62,7 @@ public class DocLibrary {
                 if (allDocs[i].documentName.equals(importantDocNames[j])) {
                     int id = getImagefromName(allDocs[i].documentName);
                     allDocs[i].bitmap = BitmapFactory.decodeResource(context.getResources(), id);
+                    essentialDocAvailableList[j] = true;
 
                     essentialDocList.add(allDocs[i]);
                     fEssentialDoc = true;
@@ -71,6 +72,17 @@ public class DocLibrary {
 
             if (!fEssentialDoc) {
                 otherDocList.add(allDocs[i]);
+            }
+        }
+
+        for (int i=0;i<essentialDocAvailableList.length;i++) {
+            if (!essentialDocAvailableList[i]) {
+                int id = R.mipmap.add_document;
+
+                DigiDoc digiDoc = new DigiDoc(importantDocNames[i], "");
+                digiDoc.bitmap = BitmapFactory.decodeResource(context.getResources(), id);
+
+                essentialDocList.add(digiDoc);
             }
         }
 
