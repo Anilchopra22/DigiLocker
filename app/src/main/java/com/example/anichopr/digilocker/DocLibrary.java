@@ -27,20 +27,24 @@ public class DocLibrary {
     static DigiDoc[] allDocs = null;
 
     static String[] importantDocNames = {
-            "passport",
-            "driving",
-            "voter",
-            "pan"
+            "Passport",
+            "Pancard",
+            "Voterid",
+            "Aadhar"
     };
 
     public static int getImagefromName(String name) {
-        if (name.contains("")) {
-
-        } else {
-
+        if (name.contains("Passport")) {
+                return  R.mipmap.passport;
+        } else if (name.contains("Pancard")){
+                return R.mipmap.pancard;
+        }else if (name.contains("Voterid")){
+            return R.mipmap.voterid;
+        }else if (name.contains("Aadhar")){
+            return R.mipmap.aadhaar;
         }
+        else return R.mipmap.doc;
 
-        return R.mipmap.alert;
      }
 
     public static void refreshEssentialAndOthersDigiDocs(Context context) {

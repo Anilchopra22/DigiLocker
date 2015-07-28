@@ -14,12 +14,13 @@
         android:id="@+id/essential_doc_gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="90dp"
+        android:columnWidth="9dp"
         android:numColumns="2"
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
         android:stretchMode="columnWidth"
         android:gravity="center"
+
 
         />
 
@@ -27,7 +28,7 @@
         android:id="@+id/add_document_btn"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="32dp"
+        android:layout_margin="1dp"
         android:background="@mipmap/add_document"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

@@ -26,17 +26,21 @@
         <activity
             android:name=".HowtoActivity"
             android:label="@string/title_activity_howto"
-            android:theme="@style/ActionBarTheme" >
+            android:theme="@style/ActionBarTheme"
+            android:parentActivityName=".RootActivity">
+
         </activity>
         <activity
             android:name=".ApplyActivity"
             android:label="@string/title_activity_apply"
-            android:theme="@style/ActionBarTheme" >
+            android:theme="@style/ActionBarTheme"
+            android:parentActivityName=".HowtoActivity">
         </activity>
         <activity
             android:name=".DocRequirementActivity"
             android:label="@string/title_activity_doc_requirement"
-            android:theme="@style/ActionBarTheme" >
+            android:theme="@style/ActionBarTheme"
+            android:parentActivityName=".ApplyActivity">
         </activity>
     </application>
 

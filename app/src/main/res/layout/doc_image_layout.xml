@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:gravity="center"
         android:layout_height="wrap_content"
-        android:src="@mipmap/doc_xx" />
+        android:src="@mipmap/doc" />
 
     <TextView
         android:id="@+id/txt2"
@@ -23,5 +23,8 @@
         android:layout_below="@+id/img2"
         android:text="TextView"
         android:background="@color/blue"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:padding="8dp"
+        android:textSize="18sp"
+        />
 </RelativeLayout>
