@@ -16,15 +16,18 @@ import android.widget.ListView;
 public class HowtoActivity extends AppCompatActivity {
     String[] itemname ={
             "Passport",
-            "Birth Certificate",
             "Driving License",
             "Pan Card",
             "Voter Id",
     };
-
+    String[] serviceName={
+            "Internet Connection",
+            "Telephone Connection",
+            "Bank Account"
+    };
     public void HideActionBarLogo() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("How-to-");
+        getSupportActionBar().setTitle("Apply for");
         getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.blue));
         getSupportActionBar().setIcon(
                 new ColorDrawable(getResources().getColor(android.R.color.transparent)));
@@ -46,6 +49,10 @@ public class HowtoActivity extends AppCompatActivity {
                 startActivity(searchIntent);
             }
         });
+        ListView serviceListview = (ListView) findViewById(R.id.howto_services_listview);
+        ArrayAdapter<String> serviceAdapter = new ArrayAdapter<String>(this,
+                R.layout.how_to_item_layout, R.id.textView, serviceName);
+        serviceListview.setAdapter(serviceAdapter);
     }
 
 
