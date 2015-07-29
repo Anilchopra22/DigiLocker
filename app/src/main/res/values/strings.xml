@@ -19,4 +19,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_notification">NotificationActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
+
+    <string name="two_short">You are two documents short of applying for </string>
+    <string name="can_apply">Congratulations, You have all the required documents to apply for internet connection.</string>
 </resources>

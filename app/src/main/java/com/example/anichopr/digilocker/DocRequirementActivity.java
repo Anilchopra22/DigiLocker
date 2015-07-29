@@ -28,9 +28,17 @@ import java.util.Map;
 
 
 public class DocRequirementActivity extends AppCompatActivity {
-    Map<String,String> map= new HashMap<String,String>();
+    static Map<String,String> map= new HashMap<String,String>();
+    static {
+        map.put("Passport","http://passportindia.gov.in");
+        map.put("Pan Card","https://tin.tin.nsdl.com/pan/");
+        map.put("Voter Id","http://www.elections.tn.gov.in/eregistration/");
+        map.put("Driving License","http://www.aptransport.org/html/driving-licencel-learners.html");
+        map.put("Internet Connection","http://www.actcorp.in/#lead/0/");
+        map.put("Bank Account", "https://retail.onlinesbi.com/personal/newuser_reg.html");
+        map.put("Telephone Connection", "http://portal.bsnl.in/aspxfiles/default.aspx");
+    }
 
-    String[] itemname = null;
     String[] passportitems ={
             "Birth Certificate",
             "Telephone Bill",
@@ -43,6 +51,13 @@ public class DocRequirementActivity extends AppCompatActivity {
             "Telephone Bill",
     };
 
+    String[] defaultItems = {
+            "Birth Certificate",
+            "Income Certificate",
+            "Degree Certificate",
+    };
+    String[] itemname = defaultItems;
+
     private String loadSavedPreferences() {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
@@ -51,7 +66,6 @@ public class DocRequirementActivity extends AppCompatActivity {
 
     public void HideActionBarLogo() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("How-to-");
         getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.blue));
         getSupportActionBar().setIcon(
                 new ColorDrawable(getResources().getColor(android.R.color.transparent)));
@@ -59,19 +73,12 @@ public class DocRequirementActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        map.put("Passport","http://passportindia.gov.in");
-        map.put("Pan Card","https://tin.tin.nsdl.com/pan/");
-        map.put("Voter Id","http://www.elections.tn.gov.in/eregistration/");
-        map.put("Driving License","http://www.aptransport.org/html/driving-licencel-learners.html");
-        map.put("Internet Connection","http://www.actcorp.in/#lead/0/");
-        map.put("Bank Account","https://retail.onlinesbi.com/personal/newuser_reg.html");
-        map.put("Telephone Connection","http://portal.bsnl.in/aspxfiles/default.aspx");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_requirement);
 
         Intent in=getIntent();
         String name=in.getStringExtra("name");
-
+        getSupportActionBar().setTitle("Apply for " + name);
         if (name.equals("Passport")) {
             itemname = passportitems;
         } else if (name.equals("Internet Connection")) {
@@ -96,7 +103,7 @@ public class DocRequirementActivity extends AppCompatActivity {
             percentage = (availableItems*100) / itemname.length;
         }
         ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
-        bar.setProgress((int) (percentage*100));
+        bar.setProgress(percentage);
 
         Button button = (Button)findViewById(R.id.apply_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -104,15 +111,19 @@ public class DocRequirementActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(map.get( loadSavedPreferences())));
+                i.setData(Uri.parse(map.get(loadSavedPreferences())));
                 startActivity(i);
 
             }
         });
 
+        TextView requirementTitle = (TextView) findViewById(R.id.document_progress_title);
         if (percentage < 100) {
             button.setEnabled(false);
             button.setVisibility(View.GONE);
+            requirementTitle.setText(getResources().getString(R.string.two_short) + " " + name + ".");
+        } else {
+            requirementTitle.setText(getResources().getString(R.string.can_apply));
         }
     }
 

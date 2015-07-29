@@ -18,8 +18,8 @@ import com.example.anichopr.digilocker.R;
 public class NotificationActivity extends AppCompatActivity {
     String[] notifications = {
             "Congratultions, your passport has been uploaded by Passport authority of India.",
-            "You have successfully applied for beam internet connection.",
-            "You have successfully uploaded your voter id card.",
+            "You have successfully applied for Internet Connection.",
+            "You have successfully uploaded your Voter Id Card.",
     };
 
     public void HideActionBarLogo() {
