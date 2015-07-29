@@ -228,8 +228,8 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                    startActivityForResult(intent, CAMERA_REQUEST);
+                    Intent intent = new Intent(mContext, CameraActivity.class);
+                    startActivity(intent);
                 }
             });
             return relativeLayout;
