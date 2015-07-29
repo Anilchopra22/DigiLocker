@@ -1,7 +1,9 @@
 package com.example.anichopr.digilocker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,13 +22,32 @@ public class ApplyActivity extends AppCompatActivity {
             "Renew",
             "Update Details",
     };
+    private void savePreferences(String key, String value) {
 
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+
+    }
+
+    private String loadSavedPreferences() {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+
+       return sharedPreferences.getString("name", "YourName");
+    }
     public void HideActionBarLogo() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent in=getIntent();
         String name=in.getStringExtra("name");
+
         if (name==null)
-            name="";
+            name=loadSavedPreferences();
+        else
+            savePreferences("name",name);
+
         getSupportActionBar().setTitle( name);
         getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.blue));
         getSupportActionBar().setIcon(
@@ -46,7 +67,8 @@ public class ApplyActivity extends AppCompatActivity {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Intent searchIntent = new Intent(ApplyActivity.this, DocRequirementActivity.class);
+                Intent searchIntent = new Intent(ApplyActivity.this, DocRequirementActivity.class)
+                        .putExtra("name",loadSavedPreferences());
                 startActivity(searchIntent);
             }
         });
