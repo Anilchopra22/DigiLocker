@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 
 public class SigninActivity extends Activity {
@@ -17,12 +18,22 @@ public class SigninActivity extends Activity {
         setContentView(R.layout.activity_signin);
 
         Button signInBtn = (Button) findViewById(R.id.sign_in_btn);
+        final EditText userName = (EditText) findViewById(R.id.username);
+        final EditText passWord = (EditText) findViewById(R.id.password);
+
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DocLibrary.refreshEssentialAndOthersDigiDocs();
-                Intent intent = new Intent(SigninActivity.this, RootActivity.class);
-                startActivity(intent);
+                String username = userName.getText().toString();
+                String password = passWord.getText().toString();
+                if (username.equals("testuser") && password.equals("password")) {
+                    DocLibrary.refreshEssentialAndOthersDigiDocs();
+                    Intent intent = new Intent(SigninActivity.this, RootActivity.class);
+                    startActivity(intent);
+                } else {
+                    userName.setText("");
+                    passWord.setText("");
+                }
             }
         });
     }
