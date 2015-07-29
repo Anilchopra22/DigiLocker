@@ -15,13 +15,19 @@
             android:theme="@style/ActionBarTheme" >
         </activity>
         <activity
-            android:name=".SigninActivity"
-            android:label="DigiLocker" >
+            android:name=".SplashActivity"
+            android:label="@string/app_name"
+                 >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".SigninActivity"
+            android:label="DigiLocker" >
+
         </activity>
         <activity
             android:name=".HowtoActivity"
@@ -47,6 +53,7 @@
             android:parentActivityName=".RootActivity"
             android:theme="@style/ActionBarTheme" >
         </activity>
+
     </application>
 
 </manifest>

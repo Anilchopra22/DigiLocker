@@ -23,7 +23,11 @@ public class ApplyActivity extends AppCompatActivity {
 
     public void HideActionBarLogo() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Apply For");
+        Intent in=getIntent();
+        String name=in.getStringExtra("name");
+        if (name==null)
+            name="";
+        getSupportActionBar().setTitle( name);
         getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.blue));
         getSupportActionBar().setIcon(
                 new ColorDrawable(getResources().getColor(android.R.color.transparent)));
