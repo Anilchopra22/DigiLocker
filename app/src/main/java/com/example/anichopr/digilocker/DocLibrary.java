@@ -1,5 +1,7 @@
 package com.example.anichopr.digilocker;
 
+import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.StrictMode;
 
 import org.jsoup.Connection;
@@ -25,15 +27,36 @@ public class DocLibrary {
     static DigiDoc[] allDocs = null;
 
     static String[] importantDocNames = {
-            "passport",
-            "driving",
-            "voter",
-            "pan"
+            "Passport",
+            "Pan",
+            "Voter",
+            "Aadhar",
+            "Driving",
+            "Birth"
     };
 
-    public static void refreshEssentialAndOthersDigiDocs() {
+    public static int getImagefromName(String name) {
+        if (name.contains("Passport")) {
+                return  R.mipmap.passport;
+        } else if (name.contains("Pancard")){
+                return R.mipmap.pancard;
+        } else if (name.contains("Voterid")){
+            return R.mipmap.voterid;
+        } else if (name.contains("Aadhar")){
+            return R.mipmap.aadhaar;
+        } else if (name.contains("Driving")){
+            return R.mipmap.voterid;
+        } else if (name.contains("Birth")){
+            return R.mipmap.aadhaar;
+        }
+
+        else return R.mipmap.doc;
+     }
+
+    public static void refreshEssentialAndOthersDigiDocs(Context context) {
         ArrayList<DigiDoc> otherDocList = new ArrayList<DigiDoc>();
         ArrayList<DigiDoc> essentialDocList = new ArrayList<DigiDoc>();
+        boolean[] essentialDocAvailableList = new boolean[importantDocNames.length];
 
         // refresh all documents
         refreshDigiDocsFromDocument();
@@ -43,7 +66,11 @@ public class DocLibrary {
         for (int i=0;i<allDocs.length;i++) {
             boolean fEssentialDoc = false;
             for (int j=0; j<importantDocNames.length;j++) {
-                if (allDocs[i].documentName.equals(importantDocNames[j])) {
+                if (allDocs[i].documentName.contains(importantDocNames[j])) {
+                    int id = getImagefromName(allDocs[i].documentName);
+                    allDocs[i].bitmap = BitmapFactory.decodeResource(context.getResources(), id);
+                    essentialDocAvailableList[j] = true;
+
                     essentialDocList.add(allDocs[i]);
                     fEssentialDoc = true;
                     break;
@@ -52,6 +79,17 @@ public class DocLibrary {
 
             if (!fEssentialDoc) {
                 otherDocList.add(allDocs[i]);
+            }
+        }
+
+        for (int i=0;i<essentialDocAvailableList.length;i++) {
+            if (!essentialDocAvailableList[i]) {
+                int id = R.mipmap.add_document;
+
+                DigiDoc digiDoc = new DigiDoc(importantDocNames[i], "");
+                digiDoc.bitmap = BitmapFactory.decodeResource(context.getResources(), id);
+
+                essentialDocList.add(digiDoc);
             }
         }
 
@@ -64,6 +102,7 @@ public class DocLibrary {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
             Connection.Response res = Jsoup.connect("https://digilocker.gov.in/Signin.aspx")
+                    .timeout(100000)
                     .execute();
             Map<String, String> cookie_map = res.cookies();
 
@@ -75,7 +114,7 @@ public class DocLibrary {
             Element viewstateencryptedValue = doc.getElementById("__VIEWSTATEENCRYPTED");
             String seed = doc.getElementById("SitePH_btnLogin").attr("onClick").split("'")[1];
             String ss = viewstateencryptedValue.attr("value");
-            System.out.println(seed);
+
 
 
             Connection.Response signin = Jsoup.connect("https://digilocker.gov.in/Signin.aspx").
@@ -102,6 +141,7 @@ public class DocLibrary {
                     data("ctl00$SitePH$txt_UID", "Aadhaar Number").
                     cookies(cookie_map).
                     method(Connection.Method.POST).
+                    timeout(10000).
                     execute();
 
             //	File input = new File("C:\\Users\\israut\\Desktop\\DigiLocker.htm");

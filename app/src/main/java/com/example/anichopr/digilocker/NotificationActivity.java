@@ -12,22 +12,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.anichopr.digilocker.DocRequirementActivity;
+import com.example.anichopr.digilocker.R;
 
-public class HowtoActivity extends AppCompatActivity {
-    String[] itemname ={
-            "Passport",
-            "Driving License",
-            "Pan Card",
-            "Voter Id",
+public class NotificationActivity extends AppCompatActivity {
+    String[] notifications = {
+            "Congratultions, your passport has been uploaded by Passport authority of India.",
+            "You have successfully applied for beam internet connection.",
+            "You have successfully uploaded your voter id card.",
     };
-    String[] serviceName={
-            "Internet Connection",
-            "Telephone Connection",
-            "Bank Account"
-    };
+
     public void HideActionBarLogo() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Apply for");
+        getSupportActionBar().setTitle("How-to-");
         getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.blue));
         getSupportActionBar().setIcon(
                 new ColorDrawable(getResources().getColor(android.R.color.transparent)));
@@ -36,30 +33,19 @@ public class HowtoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_howto);
-        HideActionBarLogo();
-        ListView listview = (ListView) findViewById(R.id.howto_listview);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.how_to_item_layout, R.id.textView, itemname);
-        listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Intent searchIntent = new Intent(HowtoActivity.this, ApplyActivity.class);
-                startActivity(searchIntent);
-            }
-        });
-        ListView serviceListview = (ListView) findViewById(R.id.howto_services_listview);
-        ArrayAdapter<String> serviceAdapter = new ArrayAdapter<String>(this,
-                R.layout.how_to_item_layout, R.id.textView, serviceName);
-        serviceListview.setAdapter(serviceAdapter);
-    }
+        setContentView(R.layout.activity_notification);
 
+        HideActionBarLogo();
+        ListView listview = (ListView) findViewById(R.id.notifications_listview);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.how_to_item_layout, R.id.textView, notifications);
+        listview.setAdapter(adapter);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.search, menu);
+        getMenuInflater().inflate(R.menu.menu_notification, menu);
         return true;
     }
 
@@ -69,10 +55,12 @@ public class HowtoActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
-
 }

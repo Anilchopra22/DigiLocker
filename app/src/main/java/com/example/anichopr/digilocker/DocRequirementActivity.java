@@ -25,6 +25,7 @@ public class DocRequirementActivity extends AppCompatActivity {
     public void HideActionBarLogo() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("How-to-");
+        getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.blue));
         getSupportActionBar().setIcon(
                 new ColorDrawable(getResources().getColor(android.R.color.transparent)));
     }

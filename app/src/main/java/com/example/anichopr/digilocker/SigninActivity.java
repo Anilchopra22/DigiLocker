@@ -27,7 +27,7 @@ public class SigninActivity extends Activity {
                 String username = userName.getText().toString();
                 String password = passWord.getText().toString();
                 if (username.equals("testuser") && password.equals("password")) {
-                    DocLibrary.refreshEssentialAndOthersDigiDocs();
+                    DocLibrary.refreshEssentialAndOthersDigiDocs(getApplicationContext());
                     Intent intent = new Intent(SigninActivity.this, RootActivity.class);
                     startActivity(intent);
                 } else {
