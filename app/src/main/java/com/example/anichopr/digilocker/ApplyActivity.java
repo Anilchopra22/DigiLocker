@@ -68,7 +68,7 @@ public class ApplyActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 Intent searchIntent = new Intent(ApplyActivity.this, DocRequirementActivity.class)
-                        .putExtra("name",loadSavedPreferences());
+                        .putExtra("name", loadSavedPreferences());
                 startActivity(searchIntent);
             }
         });

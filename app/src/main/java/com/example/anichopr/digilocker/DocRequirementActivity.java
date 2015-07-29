@@ -1,34 +1,48 @@
 package com.example.anichopr.digilocker;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.UserManager;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class DocRequirementActivity extends AppCompatActivity {
-Map<String,String> map= new HashMap<String,String>();
+    Map<String,String> map= new HashMap<String,String>();
 
-    String[] itemname ={
-            "Birth certificate",
-            "Residence Proof",
+    String[] itemname = null;
+    String[] passportitems ={
+            "Birth Certificate",
+            "Telephone Bill",
             "Income Certificate",
             "Degree Certificate",
     };
+
+    String[] netConnectionItems ={
+            "Birth Certificate",
+            "Telephone Bill",
+    };
+
     private String loadSavedPreferences() {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
@@ -55,11 +69,34 @@ Map<String,String> map= new HashMap<String,String>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_requirement);
 
+        Intent in=getIntent();
+        String name=in.getStringExtra("name");
+
+        if (name.equals("Passport")) {
+            itemname = passportitems;
+        } else if (name.equals("Internet Connection")) {
+            itemname = netConnectionItems;
+        }
+
+
         HideActionBarLogo();
         ListView listview = (ListView) findViewById(R.id.checklist_listview);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.how_to_item_layout, R.id.textView, itemname);
+        RecentItemListAdapter adapter = new RecentItemListAdapter(this, R.layout.how_to_item_layout, itemname);
         listview.setAdapter(adapter);
+
+        int availableItems = 0;
+        int percentage = 0;
+        for (String item : itemname) {
+            if (DocLibrary.IsDocAvailable(item)) {
+                availableItems++;
+            }
+        }
+
+        if (itemname != null && itemname.length != 0) {
+            percentage = (availableItems*100) / itemname.length;
+        }
+        ProgressBar bar = (ProgressBar) findViewById(R.id.progressBar);
+        bar.setProgress((int) (percentage*100));
 
         Button button = (Button)findViewById(R.id.apply_button);
         button.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +109,11 @@ Map<String,String> map= new HashMap<String,String>();
 
             }
         });
+
+        if (percentage < 100) {
+            button.setEnabled(false);
+            button.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -95,4 +137,44 @@ Map<String,String> map= new HashMap<String,String>();
 
         return super.onOptionsItemSelected(item);
     }
+
+    public static class RecentItemListAdapter extends ArrayAdapter<String> {
+        private Context mContext;
+        private String[] items;
+
+        public RecentItemListAdapter(Context ctx, int txtViewResourceId, String[] objects) {
+            super(ctx, txtViewResourceId, objects);
+            mContext = ctx;
+            items = objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View cnvtView, ViewGroup prnt) {
+            return getCustomView(position, cnvtView, prnt);
+        }
+
+        @Override
+        public View getView(int pos, View cnvtView, ViewGroup prnt) {
+            return getCustomView(pos, cnvtView, prnt);
+        }
+
+        public View getCustomView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = LayoutInflater.from(mContext);
+
+            View mySpinner = inflater.inflate(R.layout.how_to_item_layout, parent, false);
+            TextView textView = (TextView) mySpinner.findViewById(R.id.textView);
+            textView.setText(items[position]);
+
+            ImageView imageView = (ImageView) mySpinner.findViewById(R.id.imageView);
+            if (DocLibrary.IsDocAvailable(items[position])) {
+                imageView.setImageResource(R.mipmap.available);
+            } else {
+                imageView.setImageResource(R.mipmap.notavailable);
+
+            }
+            return mySpinner;
+        }
+
+    }
+
 }
