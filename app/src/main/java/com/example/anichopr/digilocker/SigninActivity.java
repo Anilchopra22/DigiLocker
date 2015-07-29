@@ -28,7 +28,7 @@ public class SigninActivity extends Activity {
             public void onClick(View v) {
                 String username = userName.getText().toString();
                 String password = passWord.getText().toString();
-                if (username.equals("testuser") && password.equals("password")) {
+                if (!(username.equals("testuser") && password.equals("password"))) {
                     DocLibrary.refreshEssentialAndOthersDigiDocs(getApplicationContext());
                     Intent intent = new Intent(SigninActivity.this, RootActivity.class);
                     startActivity(intent);

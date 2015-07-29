@@ -40,13 +40,6 @@ public class DocRequirementActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.how_to_item_layout, R.id.textView, itemname);
         listview.setAdapter(adapter);
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Intent searchIntent = new Intent(DocRequirementActivity.this, DocRequirementActivity.class);
-                startActivity(searchIntent);
-            }
-        });
     }
 
     @Override

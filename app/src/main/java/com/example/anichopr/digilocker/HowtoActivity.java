@@ -38,21 +38,33 @@ public class HowtoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_howto);
         HideActionBarLogo();
-        ListView listview = (ListView) findViewById(R.id.howto_listview);
+        final ListView listview = (ListView) findViewById(R.id.howto_listview);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.how_to_item_layout, R.id.textView, itemname);
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
-                Intent searchIntent = new Intent(HowtoActivity.this, ApplyActivity.class);
+
+                 Intent searchIntent = new Intent(HowtoActivity.this, ApplyActivity.class)
+                         .putExtra("name",itemname[position]);
                 startActivity(searchIntent);
             }
         });
+
         ListView serviceListview = (ListView) findViewById(R.id.howto_services_listview);
         ArrayAdapter<String> serviceAdapter = new ArrayAdapter<String>(this,
                 R.layout.how_to_item_layout, R.id.textView, serviceName);
         serviceListview.setAdapter(serviceAdapter);
+
+        serviceListview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+                Intent searchIntent = new Intent(HowtoActivity.this, ApplyActivity.class)
+                        .putExtra("name",serviceName[position]);
+                startActivity(searchIntent);
+            }
+        });
     }
 
 
