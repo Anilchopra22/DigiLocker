@@ -28,11 +28,9 @@ public class DocLibrary {
 
     static String[] importantDocNames = {
             "Passport",
-            "Pan",
-            "Voter",
-            "Aadhar",
-            "Driving",
-            "Birth"
+            "Pancard",
+            "Voterid",
+            "Aadhar"
     };
 
     public static int getImagefromName(String name) {
@@ -40,16 +38,11 @@ public class DocLibrary {
                 return  R.mipmap.passport;
         } else if (name.contains("Pancard")){
                 return R.mipmap.pancard;
-        } else if (name.contains("Voterid")){
+        }else if (name.contains("Voterid")){
             return R.mipmap.voterid;
-        } else if (name.contains("Aadhar")){
-            return R.mipmap.aadhaar;
-        } else if (name.contains("Driving")){
-            return R.mipmap.voterid;
-        } else if (name.contains("Birth")){
+        }else if (name.contains("Aadhar")){
             return R.mipmap.aadhaar;
         }
-
         else return R.mipmap.doc;
      }
 
@@ -66,7 +59,7 @@ public class DocLibrary {
         for (int i=0;i<allDocs.length;i++) {
             boolean fEssentialDoc = false;
             for (int j=0; j<importantDocNames.length;j++) {
-                if (allDocs[i].documentName.contains(importantDocNames[j])) {
+                if (allDocs[i].documentName.equals(importantDocNames[j])) {
                     int id = getImagefromName(allDocs[i].documentName);
                     allDocs[i].bitmap = BitmapFactory.decodeResource(context.getResources(), id);
                     essentialDocAvailableList[j] = true;
