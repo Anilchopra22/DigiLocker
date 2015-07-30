@@ -44,7 +44,7 @@
     <TextView
         android:id="@+id/checklist_title"
         android:layout_below="@+id/document_progress_seperator"
-        android:text="PICK AN ACTION"
+        android:text="DOCUMENT REQUIRED"
         android:layout_margin="4dp"
         android:paddingLeft="4dp"
         android:paddingBottom="4dp"
