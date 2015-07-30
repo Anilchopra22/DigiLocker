@@ -2,8 +2,11 @@ package com.example.anichopr.digilocker;
 
 import java.util.Locale;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -181,7 +184,7 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
         private static Context mContext = null;
-        private static final int CAMERA_REQUEST = 1888;
+        private static final int CAMERA_REQUEST_ESSENTIAL = 1890;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -215,8 +218,8 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
 
                     if (digidocs[position].documentURL == null ||
                             digidocs[position].documentURL.isEmpty()) {
-                        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                        startActivityForResult(intent, CAMERA_REQUEST);
+                        Intent intent = new Intent(mContext, CameraActivity.class);
+                        startActivityForResult(intent, CAMERA_REQUEST_ESSENTIAL);
                     } else {
                         Intent browserIntent = new Intent("android.intent.action.VIEW",
                                 Uri.parse("http://docs.google.com/gview?embedded=true&url=" + "https://digilocker.gov.in/CandidateLocker/" + digidocs[position].documentURL));
@@ -229,11 +232,22 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, CameraActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent, CAMERA_REQUEST_ESSENTIAL);
                 }
             });
             return relativeLayout;
         }
+
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (requestCode == CAMERA_REQUEST_ESSENTIAL && resultCode == RESULT_OK) {
+                String filePath = (String) data.getExtras().get("file_path");
+                Bitmap filePhoto = BitmapFactory.decodeFile(filePath.getAbsolutePath());
+                String documentType = (String) data.getExtras().get("document_name");
+                DigiDoc doc = new DigiDoc(documentType, filePhoto);
+                DocLibrary.essentialDocs.add(doc);
+            }
+        }
+
     }
 
 
@@ -243,7 +257,7 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
          * fragment.
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private static final int CAMERA_REQUEST = 1888;
+        private static final int CAMERA_REQUEST_OTHERS = 1895;
         private static Context mContext = null;
 
         /**
@@ -279,8 +293,8 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
 
                     if (digidocs[position].documentURL == null ||
                             digidocs[position].documentURL.isEmpty()) {
-                        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                        startActivityForResult(intent, CAMERA_REQUEST);
+                        Intent intent = new Intent(mContext, CameraActivity.class);
+                        startActivityForResult(intent, CAMERA_REQUEST_OTHERS);
                     } else {
                         Intent browserIntent = new Intent("android.intent.action.VIEW",
                                 Uri.parse("http://docs.google.com/gview?embedded=true&url=" + "https://digilocker.gov.in/CandidateLocker/" + digidocs[position].documentURL));
@@ -292,12 +306,24 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                    startActivityForResult(intent, CAMERA_REQUEST);
+                    Intent intent = new Intent(mContext, CameraActivity.class);
+                    startActivityForResult(intent, CAMERA_REQUEST_OTHERS);
                 }
             });
 
             return relativeLayout;
+        }
+
+
+
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            if (requestCode == CAMERA_REQUEST_OTHERS && resultCode == RESULT_OK) {
+                String filePath = (String) data.getExtras().get("file_path");
+                Bitmap filePhoto = BitmapFactory.decodeFile(filePath.getAbsolutePath());
+                String documentType = (String) data.getExtras().get("document_name");
+                DigiDoc doc = new DigiDoc(documentType, filePhoto);
+                DocLibrary.otherDocs.add(doc);
+            }
         }
     }
 

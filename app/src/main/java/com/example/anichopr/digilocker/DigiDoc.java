@@ -39,4 +39,9 @@ public class DigiDoc {
         this.documentName = documentName;
         this.documentURL = documentURL;
     }
+
+    public DigiDoc(String documentName, Bitmap documentBitmap) {
+        this.documentName = documentName;
+        this.bitmap = documentBitmap;
+    }
 }
