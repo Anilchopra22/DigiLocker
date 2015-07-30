@@ -5,34 +5,34 @@
     tools:context="com.example.anichopr.digilocker.CameraActivity">
 
     <ImageView
+        android:id="@+id/cameraImageView"
         android:layout_marginTop="-20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxWidth="300dp"
         android:maxHeight="400dp"
-        android:id="@+id/cameraImageView"
         android:layout_above="@+id/documentType"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="ExpiryDate (ddmmyyyy)"
-        android:id="@+id/expiryDate"
-        android:padding="5dp"
-        android:layout_above="@+id/saveButton"
-        android:layout_alignStart="@+id/imageName" />
 
     <EditText
+        android:id="@+id/documentType"
+        android:layout_above="@+id/expiryDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Document Type"
-        android:id="@+id/documentType"
-        android:padding="5dp"
-        android:layout_above="@+id/expiryDate"
+        android:padding="8dp"
         android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/expiryDate"
+        android:layout_above="@+id/saveButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="ExpiryDate (ddmmyyyy)"
+        android:padding="8dp" />
 
     <Button
         android:id="@+id/saveButton"

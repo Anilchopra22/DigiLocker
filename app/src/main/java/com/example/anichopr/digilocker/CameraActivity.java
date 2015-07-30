@@ -80,6 +80,8 @@ public class CameraActivity extends Activity {
                     resultIntent.putExtra("file_path", photoFile.getAbsolutePath());
                     resultIntent.putExtra("document_name", documentType.getText().toString());
                     resultIntent.putExtra("expiry_date",expiryDate.getText().toString());
+
+
                     setResult(Activity.RESULT_OK, resultIntent);
                     finish();
                 }
