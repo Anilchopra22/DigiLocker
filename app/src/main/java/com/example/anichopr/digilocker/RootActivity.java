@@ -244,7 +244,7 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
                 Bitmap filePhoto = BitmapFactory.decodeFile(filePath);
                 String documentType = (String) data.getExtras().get("document_name");
                 DigiDoc doc = new DigiDoc(documentType, filePhoto);
-                DocLibrary.essentialDocs.add(doc);
+                //DocLibrary.essentialDocs.add(doc);
             }
         }
 
@@ -322,7 +322,7 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
                 Bitmap filePhoto = BitmapFactory.decodeFile(filePath);
                 String documentType = (String) data.getExtras().get("document_name");
                 DigiDoc doc = new DigiDoc(documentType, filePhoto);
-                DocLibrary.otherDocs.add(doc);
+                //DocLibrary.otherDocs.add(doc);
             }
         }
     }
