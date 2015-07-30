@@ -53,7 +53,7 @@ public class DocImageAdapter extends BaseAdapter {
 
         Bitmap bitmap = mDocumentsInfo[position].bitmap;
         if (bitmap == null)
-            bitmap = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.doc);
+            bitmap = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.docwhite);
         Bitmap bitmap2 = Bitmap.createScaledBitmap(bitmap, 450, 450, true);
 
         img.setImageBitmap(bitmap2);

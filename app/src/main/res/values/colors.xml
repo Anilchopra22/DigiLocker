@@ -4,4 +4,7 @@
 
     <color name="blue">#ff0b7daf</color>
     <color name="bodycolor">#ff1d2937</color>
+    <color name="doc">#ff798088</color>
+
+    <color name="signin">#ff00aff0</color>
 </resources>

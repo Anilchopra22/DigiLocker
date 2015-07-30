@@ -28,22 +28,30 @@ public class DocLibrary {
 
     static String[] importantDocNames = {
             "Passport",
-            "Pancard",
-            "Voterid",
-            "Aadhar"
+            "Pan",
+            "Voter",
+            "Aadhar",
+            "Driving",
+            "Birth"
     };
 
     public static int getImagefromName(String name) {
         if (name.contains("Passport")) {
                 return  R.mipmap.passport;
-        } else if (name.contains("Pancard")){
+        } else if (name.contains("Pan")){
                 return R.mipmap.pancard;
-        }else if (name.contains("Voterid")){
+        }else if (name.contains("Voter")){
             return R.mipmap.voterid;
         }else if (name.contains("Aadhar")){
             return R.mipmap.aadhaar;
         }
-        else return R.mipmap.doc;
+        else if (name.contains("Birth")) {
+            return R.mipmap.aadhaar;
+        }
+        else if (name.contains("Driving")) {
+            return R.mipmap.aadhaar;
+        }
+        else return R.mipmap.docwhite;
      }
 
     public static void refreshEssentialAndOthersDigiDocs(Context context) {
@@ -59,7 +67,7 @@ public class DocLibrary {
         for (int i=0;i<allDocs.length;i++) {
             boolean fEssentialDoc = false;
             for (int j=0; j<importantDocNames.length;j++) {
-                if (allDocs[i].documentName.equals(importantDocNames[j])) {
+                if (allDocs[i].documentName.contains(importantDocNames[j])) {
                     int id = getImagefromName(allDocs[i].documentName);
                     allDocs[i].bitmap = BitmapFactory.decodeResource(context.getResources(), id);
                     essentialDocAvailableList[j] = true;
@@ -77,7 +85,7 @@ public class DocLibrary {
 
         for (int i=0;i<essentialDocAvailableList.length;i++) {
             if (!essentialDocAvailableList[i]) {
-                int id = R.mipmap.add_document;
+                int id = R.mipmap.plus;
 
                 DigiDoc digiDoc = new DigiDoc(importantDocNames[i], "");
                 digiDoc.bitmap = BitmapFactory.decodeResource(context.getResources(), id);
@@ -192,5 +200,17 @@ public class DocLibrary {
             }
         }
         return digiDocArray;
+    }
+
+    public static boolean IsDocAvailable(String text) {
+        if (allDocs == null)
+            return false;
+
+        for (DigiDoc doc : allDocs) {
+            if (doc.documentName.contains(text)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

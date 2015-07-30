@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <Button
-        android:id="@+id/sign_in_btn"
+        android:id="@+id/apply_button"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
         android:text="Apply"
@@ -68,6 +68,7 @@
         android:layout_centerHorizontal="true"
         android:background="@color/blue"
         android:textColor="@android:color/white"
+        android:padding="10dp"
         />
 
 </RelativeLayout>

@@ -241,7 +241,7 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             if (requestCode == CAMERA_REQUEST_ESSENTIAL && resultCode == RESULT_OK) {
                 String filePath = (String) data.getExtras().get("file_path");
-                Bitmap filePhoto = BitmapFactory.decodeFile(filePath.getAbsolutePath());
+                Bitmap filePhoto = BitmapFactory.decodeFile(filePath);
                 String documentType = (String) data.getExtras().get("document_name");
                 DigiDoc doc = new DigiDoc(documentType, filePhoto);
                 DocLibrary.essentialDocs.add(doc);
@@ -319,7 +319,7 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
             if (requestCode == CAMERA_REQUEST_OTHERS && resultCode == RESULT_OK) {
                 String filePath = (String) data.getExtras().get("file_path");
-                Bitmap filePhoto = BitmapFactory.decodeFile(filePath.getAbsolutePath());
+                Bitmap filePhoto = BitmapFactory.decodeFile(filePath);
                 String documentType = (String) data.getExtras().get("document_name");
                 DigiDoc doc = new DigiDoc(documentType, filePhoto);
                 DocLibrary.otherDocs.add(doc);
