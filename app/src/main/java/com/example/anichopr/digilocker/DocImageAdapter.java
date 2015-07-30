@@ -11,15 +11,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 /**
  * Created by anichopr on 7/28/2015.
  */
 public class DocImageAdapter extends BaseAdapter {
 
     private Context mContext;
-    private DigiDoc[] mDocumentsInfo;
+    private List<DigiDoc> mDocumentsInfo;
 
-    public DocImageAdapter(Context c, DigiDoc[] documentsInfo) {
+    public DocImageAdapter(Context c, List<DigiDoc> documentsInfo) {
         mContext = c;
         mDocumentsInfo = documentsInfo;
     }
@@ -27,7 +29,7 @@ public class DocImageAdapter extends BaseAdapter {
     public int getCount() {
         if (mDocumentsInfo == null)
             return 0;
-        return mDocumentsInfo.length;
+        return mDocumentsInfo.size();
     }
 
     public Object getItem(int position) {
@@ -51,13 +53,13 @@ public class DocImageAdapter extends BaseAdapter {
         ImageView img = (ImageView) myView.findViewById(R.id.img2);
         TextView txt = (TextView) myView.findViewById(R.id.txt2);
 
-        Bitmap bitmap = mDocumentsInfo[position].bitmap;
+        Bitmap bitmap = mDocumentsInfo.get(position).bitmap;
         if (bitmap == null)
             bitmap = BitmapFactory.decodeResource(activity.getResources(), R.mipmap.docwhite);
         Bitmap bitmap2 = Bitmap.createScaledBitmap(bitmap, 450, 450, true);
 
         img.setImageBitmap(bitmap2);
-        txt.setText(mDocumentsInfo[position].documentName);
+        txt.setText(mDocumentsInfo.get(position).documentName);
 
         return myView;
     }

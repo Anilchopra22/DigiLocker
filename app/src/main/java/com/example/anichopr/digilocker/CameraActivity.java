@@ -17,6 +17,7 @@ import android.widget.ImageView;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -81,7 +82,12 @@ public class CameraActivity extends Activity {
                     resultIntent.putExtra("document_name", documentType.getText().toString());
                     resultIntent.putExtra("expiry_date",expiryDate.getText().toString());
 
+                    DigiDoc digiDoc = new DigiDoc(documentType.getText().toString(), Uri.fromFile(new File(photoFile.getAbsolutePath())).toString());
+                    digiDoc.bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                    digiDoc.fLocal = true;
+                    digiDoc.localURI = Uri.fromFile(photoFile);
 
+                    DocLibrary.otherDocs.add(digiDoc);
                     setResult(Activity.RESULT_OK, resultIntent);
                     finish();
                 }

@@ -1,5 +1,8 @@
 package com.example.anichopr.digilocker;
 
+import java.io.File;
+import java.net.URI;
+import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -208,21 +211,21 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
             RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.essential_doc_layout, container, false);
             GridView gridview = (GridView) relativeLayout.findViewById(R.id.essential_doc_gridview);
             ImageView imageView = (ImageView) relativeLayout.findViewById(R.id.add_document_btn);
-            DigiDoc[] digidocs = DocLibrary.essentialDocs;
+            List<DigiDoc> digidocs = DocLibrary.essentialDocs;
 
             gridview.setAdapter(new DocImageAdapter(mContext, digidocs));
             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
-                    DigiDoc[] digidocs = DocLibrary.essentialDocs;
+                    List<DigiDoc> digidocs = DocLibrary.essentialDocs;
 
-                    if (digidocs[position].documentURL == null ||
-                            digidocs[position].documentURL.isEmpty()) {
+                    if (digidocs.get(position).documentURL == null ||
+                            digidocs.get(position).documentURL.isEmpty()) {
                         Intent intent = new Intent(mContext, CameraActivity.class);
                         startActivityForResult(intent, CAMERA_REQUEST_ESSENTIAL);
                     } else {
                         Intent browserIntent = new Intent("android.intent.action.VIEW",
-                                Uri.parse("http://docs.google.com/gview?embedded=true&url=" + "https://digilocker.gov.in/CandidateLocker/" + digidocs[position].documentURL));
+                                Uri.parse("http://docs.google.com/gview?embedded=true&url=" + "https://digilocker.gov.in/CandidateLocker/" + digidocs.get(position).documentURL));
                         startActivity(browserIntent);
                     }
                 }
@@ -281,7 +284,7 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
                                  Bundle savedInstanceState) {
             RelativeLayout relativeLayout = (RelativeLayout) inflater.inflate(R.layout.other_doc_layout, container, false);
             GridView gridview = (GridView) relativeLayout.findViewById(R.id.self_uploaded_doc_gridview);
-            DigiDoc[] digidocs = DocLibrary.otherDocs;
+            List<DigiDoc> digidocs = DocLibrary.otherDocs;
             ImageView imageView = (ImageView) relativeLayout.findViewById(R.id.add_document_btn);
 
             gridview.setAdapter(new DocImageAdapter(mContext, digidocs));
@@ -289,16 +292,22 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
             gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
-                    DigiDoc[] digidocs = DocLibrary.otherDocs;
+                    List<DigiDoc> digidocs = DocLibrary.otherDocs;
 
-                    if (digidocs[position].documentURL == null ||
-                            digidocs[position].documentURL.isEmpty()) {
+                    if (digidocs.get(position).documentURL == null ||
+                            digidocs.get(position).documentURL.isEmpty()) {
                         Intent intent = new Intent(mContext, CameraActivity.class);
                         startActivityForResult(intent, CAMERA_REQUEST_OTHERS);
                     } else {
-                        Intent browserIntent = new Intent("android.intent.action.VIEW",
-                                Uri.parse("http://docs.google.com/gview?embedded=true&url=" + "https://digilocker.gov.in/CandidateLocker/" + digidocs[position].documentURL));
-                        startActivity(browserIntent);
+                        if (digidocs.get(position).fLocal) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, digidocs.get(position).localURI);
+                            intent.setType("image/*");
+                            startActivity(intent); /** replace with your own uri */
+                        } else {
+                            Intent browserIntent = new Intent("android.intent.action.VIEW",
+                                    Uri.parse("http://docs.google.com/gview?embedded=true&url=" + "https://digilocker.gov.in/CandidateLocker/" + digidocs.get(position).documentURL));
+                            startActivity(browserIntent);
+                        }
                     }
                 }
             });

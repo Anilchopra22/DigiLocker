@@ -1,6 +1,7 @@
 package com.example.anichopr.digilocker;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.StrictMode;
 
 import org.jsoup.Connection;
@@ -31,6 +32,8 @@ public class DigiDoc {
     String documentURL;
     int shareId;
     Bitmap bitmap;
+    boolean fLocal = false;
+    Uri localURI = null;
 
     static int noOfOtherDocs = 0;
     static int noOfEssentialDocs = 0;

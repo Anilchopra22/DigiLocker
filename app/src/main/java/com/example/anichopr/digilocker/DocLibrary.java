@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -22,9 +23,9 @@ import java.util.Map;
  * Created by anichopr on 7/27/2015.
  */
 public class DocLibrary {
-    public static DigiDoc[] otherDocs = null;
-    public static DigiDoc[] essentialDocs = null;
-    static DigiDoc[] allDocs = null;
+    public static List<DigiDoc> otherDocs = null;
+    public static List<DigiDoc> essentialDocs = null;
+    static List<DigiDoc> allDocs = null;
 
     static String[] importantDocNames = {
             "Passport",
@@ -64,22 +65,22 @@ public class DocLibrary {
 
         if (allDocs == null)
             return;
-        for (int i=0;i<allDocs.length;i++) {
+        for (int i=0;i<allDocs.size();i++) {
             boolean fEssentialDoc = false;
             for (int j=0; j<importantDocNames.length;j++) {
-                if (allDocs[i].documentName.contains(importantDocNames[j])) {
-                    int id = getImagefromName(allDocs[i].documentName);
-                    allDocs[i].bitmap = BitmapFactory.decodeResource(context.getResources(), id);
+                if (allDocs.get(i).documentName.contains(importantDocNames[j])) {
+                    int id = getImagefromName(allDocs.get(i).documentName);
+                    allDocs.get(i).bitmap = BitmapFactory.decodeResource(context.getResources(), id);
                     essentialDocAvailableList[j] = true;
 
-                    essentialDocList.add(allDocs[i]);
+                    essentialDocList.add(allDocs.get(i));
                     fEssentialDoc = true;
                     break;
                 }
             }
 
             if (!fEssentialDoc) {
-                otherDocList.add(allDocs[i]);
+                otherDocList.add(allDocs.get(i));
             }
         }
 
@@ -94,8 +95,8 @@ public class DocLibrary {
             }
         }
 
-        otherDocs = otherDocList.toArray(new DigiDoc[otherDocList.size()]);
-        essentialDocs = essentialDocList.toArray(new DigiDoc[essentialDocList.size()]);
+        otherDocs = otherDocList;
+        essentialDocs = essentialDocList;
     }
 
     private static void refreshDigiDocsFromDocument() {
@@ -149,7 +150,7 @@ public class DocLibrary {
             //	Document signin = Jsoup.parse(input, "UTF-8", "https://digilocker.gov.in/");
 
             ArrayList<DigiDoc> allDocsList = DocLibrary.getDigiDocsFromDocument(signin.parse());
-            allDocs = allDocsList.toArray(new DigiDoc[allDocsList.size()]);
+            allDocs = allDocsList;
         } catch (IOException e) {
             e.printStackTrace();
         }
