@@ -300,9 +300,11 @@ public class RootActivity extends AppCompatActivity implements ActionBar.TabList
                         startActivityForResult(intent, CAMERA_REQUEST_OTHERS);
                     } else {
                         if (digidocs.get(position).fLocal) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW, digidocs.get(position).localURI);
-                            intent.setType("image/*");
-                            startActivity(intent); /** replace with your own uri */
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_VIEW);
+                            Uri localUri = digidocs.get(position).localURI;
+                            intent.setDataAndType(localUri, "image/*");
+                            startActivity(intent);
                         } else {
                             Intent browserIntent = new Intent("android.intent.action.VIEW",
                                     Uri.parse("http://docs.google.com/gview?embedded=true&url=" + "https://digilocker.gov.in/CandidateLocker/" + digidocs.get(position).documentURL));
